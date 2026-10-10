@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Survei Bobot SIAGA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="wrap narrow">
+  <header class="brand">
+    <div class="mark" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M5 17a8 8 0 0 1 16 0"/><path d="M9 17a4 4 0 0 1 8 0" stroke-opacity=".75"/><circle cx="13" cy="17" r="1.4" fill="#fff" stroke="none"/></svg>
+    </div>
+    <div>
+      <h1>SIAGA</h1>
+      <p>Survei singkat: seberapa penting tiap faktor dalam menentukan tugas mana yang dikerjakan lebih dulu</p>
+    </div>
+  </header>
+
+  <section class="panel" style="padding:18px;display:flex;flex-direction:column;gap:14px">
+    <h2 style="font-size:20px">Cara mengisi (sekitar 2 menit)</h2>
+    <ol class="steps">
+      <li>Tulis nama atau kode Anda.</li>
+      <li>Untuk tiap pasangan, geser ke arah faktor yang menurut Anda lebih menentukan. Biarkan di tengah bila sama penting.</li>
+      <li>Tekan <b>Buat kode jawaban</b>, salin kodenya, lalu kirim ke tim lewat chat.</li>
+    </ol>
+    <p class="small muted">Halaman ini tidak mengirim apa pun ke server. Jawaban Anda hanya menjadi kode yang Anda kirim sendiri.</p>
+  </section>
+
+  <section class="panel" style="padding:18px;display:flex;flex-direction:column;gap:14px">
+    <div class="fld"><label for="who">Nama atau kode responden</label><input type="text" id="who" placeholder="Contoh: Responden 03, Dosen A" maxlength="80" autocomplete="off"></div>
+    <div id="form"></div>
+    <div class="row-btn">
+      <button class="btn primary" type="button" id="make">Buat kode jawaban</button>
+      <button class="btn" type="button" id="reset">Atur ulang</button>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+    <div id="out" hidden style="display:flex;flex-direction:column;gap:10px">
+      <div class="note">Salin kode di bawah dan kirim ke tim.</div>
+      <div class="code" id="code" tabindex="0"></div>
+      <div class="row-btn"><button class="btn" type="button" id="copy">Salin kode</button><span class="small muted" id="copied" aria-live="polite"></span></div>
+    </div>
+  </section>
+  <footer>SIAGA · Prototipe PKM-KC · Universitas Bengkulu</footer>
+</div>
+<script src="engine/engine.js"></script>
+<script src="assets/ahp-ui.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const form = AhpUI.build($('form'));
+  $('make').addEventListener('click', () => {
+    const label = $('who').value.trim();
+    if (!label) { $('err').textContent = 'Isi nama atau kode responden dahulu.'; $('who').focus(); return; }
+    $('err').textContent = '';
+    $('code').textContent = AhpUI.encode(label, form.get());
+    $('out').hidden = false; $('out').style.display = 'flex';
+    $('copied').textContent = '';
+    $('out').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+  $('copy').addEventListener('click', async () => {
+    const ok = await AhpUI.copyText($('code').textContent, $('code'));
+    $('copied').textContent = ok ? 'Tersalin.' : 'Teks sudah terpilih. Tekan Ctrl+C untuk menyalin.';
+  });
+  $('reset').addEventListener('click', () => { form.reset(); $('out').hidden = true; $('err').textContent = ''; });
+})();
+</script>
+</body>
+</html>

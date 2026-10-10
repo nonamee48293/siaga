@@ -1,0 +1,26 @@
+=== UJI FUNGSI ===
+LOLOS Tenggat lebih dekat menaikkan skor  |  59,5 > 49,5 (24 jam vs 72 jam)
+LOLOS Kepentingan lebih tinggi menaikkan skor  |  64,5 > 42,0 (level 5 vs 2)
+LOLOS Kesulitan lebih tinggi menaikkan skor  |  59,5 > 39,5 (level 5 vs 1)
+LOLOS Durasi lebih panjang menaikkan skor  |  57,0 > 48,0 (8 jam vs 2 jam)
+LOLOS Prioritas dinamis: skor naik saat waktu maju  |  54,5 > 49,5 (+24 jam vs sekarang)
+LOLOS Tugas terlambat bernilai 100 dan berperingkat 1  |  skor 100,0, tugas #2
+LOLOS Skor selalu di rentang 0 sampai 100  |  terendah 0,8, tertinggi 99,8
+LOLOS Urutan tidak bergantung urutan input  |  [6,1,3,2,4,5] sama dengan [6,1,3,2,4,5]
+LOLOS Tugas selesai tidak masuk antrean  |  1 tugas aktif dari 2
+LOLOS Rencana harian tidak melebihi jam luang  |  semua hari dalam kapasitas
+LOLOS Tugas bertenggat mepet tetap kebagian slot  |  3,0 dari 3,0 jam terjadwal
+LOLOS Slot tidak ditempatkan setelah tenggat  |  semua slot sebelum tenggat
+LOLOS AHP: semua perbandingan sama menghasilkan bobot 25% dan CR 0  |  bobot 25,0%, CR 0,000
+LOLOS AHP: bobot berjumlah 1 dan urutan sesuai input  |  jumlah 1,000, CR 0,011
+LOLOS AHP: jawaban saling bertentangan terdeteksi (CR ≥ 0,1)  |  CR 4,005
+LOLOS Spearman: urutan sama = 1, urutan terbalik = -1  |  1,00 dan -1,00
+LOLOS SUS: jawaban terbaik = 100, terburuk = 0  |  100 dan 0
+
+17 dari 17 uji lolos
+
+=== SIMULASI PEMBANDING (bobot bawaan, 200 skenario, seed 2026) ===
+SIAGA (skor 4 parameter)       tugas terlewat  13.3% | bobot kepentingan hilang   8.7% | skenario tanpa terlewat  47%
+Tenggat terdekat saja          tugas terlewat   8.5% | bobot kepentingan hilang   8.6% | skenario tanpa terlewat  70%
+Kepentingan tertinggi saja     tugas terlewat  15.6% | bobot kepentingan hilang   9.6% | skenario tanpa terlewat  38%
+Urutan masuk (FIFO)            tugas terlewat  15.3% | bobot kepentingan hilang  15.6% | skenario tanpa terlewat  41%

@@ -1,0 +1,8 @@
+-- Skema SQLite hanya untuk pengujian otomatis (tests/api-test.sh). Aplikasi sebenarnya memakai sql/siaga.sql (MySQL).
+CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, nama TEXT NOT NULL, email TEXT NOT NULL UNIQUE, password_hash TEXT NOT NULL, telegram_chat_id TEXT, created_at TEXT);
+CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, mata_kuliah TEXT NOT NULL DEFAULT '', judul TEXT NOT NULL, deadline TEXT NOT NULL, durasi_jam REAL NOT NULL, kesulitan INTEGER NOT NULL, kepentingan INTEGER NOT NULL, warna INTEGER NOT NULL DEFAULT 1, selesai INTEGER NOT NULL DEFAULT 0, created_at TEXT);
+CREATE TABLE settings (user_id INTEGER PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE, free_json TEXT, weights_json TEXT);
+CREATE TABLE ahp_responses (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, label TEXT NOT NULL, pairs_json TEXT NOT NULL, cr REAL NOT NULL, created_at TEXT);
+CREATE TABLE ahp_weights (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, w_tenggat REAL NOT NULL, w_kepentingan REAL NOT NULL, w_kesulitan REAL NOT NULL, w_durasi REAL NOT NULL, cr REAL NOT NULL, jumlah_responden INTEGER NOT NULL, created_at TEXT);
+CREATE TABLE evaluations (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE, type TEXT NOT NULL, label TEXT NOT NULL DEFAULT '', payload TEXT NOT NULL, score REAL NOT NULL, created_at TEXT);
+CREATE TABLE reminders (id INTEGER PRIMARY KEY AUTOINCREMENT, task_id INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE, tingkat INTEGER NOT NULL, sent_at TEXT, UNIQUE(task_id, tingkat));
